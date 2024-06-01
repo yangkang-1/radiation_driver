@@ -20,7 +20,7 @@ bool radiation::radiation_init()//初始化函数
     sp.set_option(serial_port::stop_bits(serial_port::stop_bits::one));
     sp.set_option(serial_port::character_size(8));
 
-    pub_ = nh.advertise<std_msgs::Float64>("radiation/data", 50);
+    pub_ = nh.advertise<geometry_msgs::PointStamped>("radiation/data", 50);
     return true;
 }
 /********************************************************
@@ -129,8 +129,9 @@ bool radiation::readradiation()
     // 读取辐射值   -----------
     receive_data = (buf[5] << 24) + (buf[6] << 16) + (buf[7] << 8) + (buf[8]);
     //ROS_INFO("%d",receive_data);
-    final_data.data = double(receive_data / 100.0);
-    ROS_INFO("辐射值%f",final_data.data);
+    final_data.header.stamp = ros::Time::now();
+    final_data.point.x = double(receive_data / 100.0);
+    ROS_INFO("辐射值%f",final_data.point.x);
     
     // 辐射数据发布
     pub_.publish(final_data);

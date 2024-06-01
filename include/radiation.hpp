@@ -5,6 +5,7 @@
 #include <ros/time.h>
 
 #include <boost/asio.hpp>
+#include <geometry_msgs/PointStamped.h>
 #include <std_msgs/Float64.h>
 
 class radiation
@@ -12,7 +13,8 @@ class radiation
     private:
         ros::NodeHandle nh;
         ros::Publisher pub_;
-        std_msgs::Float64 final_data;
+        //std_msgs::Float64 final_data;
+        geometry_msgs::PointStamped final_data;
     public:
         radiation(){}//构造函数
         virtual ~radiation(){}//虚析构函数
